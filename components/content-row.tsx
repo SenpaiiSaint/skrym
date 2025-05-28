@@ -17,7 +17,7 @@ interface ContentRowProps {
   title: string;
   category: string;
 }
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function ContentRow({ title, category }: ContentRowProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
