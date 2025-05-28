@@ -19,7 +19,7 @@ export default function Home() {
             />
           </Suspense>
           
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div>Loading....</div>}>
             <ContentRow 
               title="Trending Now"
               category="trending"
