@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { Suspense } from "react";
 import ContentRow from "@/components/content-row";
 import HeroBanner from "@/components/hero-banner";
