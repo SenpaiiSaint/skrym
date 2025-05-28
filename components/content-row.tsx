@@ -22,14 +22,64 @@ export default function ContentRow({ title, category }: ContentRowProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // This would typically come from an API
-  const contentItems: ContentItem[] = Array(10).fill({
-    id: '1',
-    title: 'Sample Title',
-    image: '/placeholder-thumbnail.jpg',
-    rating: 'TV-MA',
-    year: 2024,
-    duration: '2h 15m'
-  });
+  const contentItems: ContentItem[] = [
+    {
+      id: '1',
+      title: 'Naruto',
+      image: '/content/naruto.jpg',
+      rating: 'PG-13',
+      year: 2002,
+      duration: '23m',
+    },
+    {
+      id: '2',
+      title: 'One Piece',
+      image: '/content/onepiece.jpg',
+      rating: 'PG',
+      year: 1999,
+      duration: '24m',
+    },
+    {
+      id: '3',
+      title: 'Demon Slayer',
+      image: '/content/demonslayer.jpg',
+      rating: 'R',
+      year: 2019,
+      duration: '24m',
+    },
+    {
+      id: '4',
+      title: 'Kaiju No. 8',
+      image: '/content/kaiju8.jpg',
+      rating: 'PG-13',
+      year: 2024,
+      duration: '24m',
+    },
+    {
+      id: '5',
+      title: 'Fate',
+      image: '/content/fate.jpg',
+      rating: 'R',
+      year: 2006,
+      duration: '24m',
+    },
+    {
+      id: '6',
+      title: 'Fate 1',
+      image: '/content/fate1.jpg',
+      rating: 'R',
+      year: 2010,
+      duration: '24m',
+    },
+    {
+      id: '7',
+      title: 'Takt Op',
+      image: '/content/taktop.jpg',
+      rating: 'PG-13',
+      year: 2021,
+      duration: '24m',
+    },
+  ];
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
