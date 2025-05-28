@@ -165,6 +165,14 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "windows"
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -172,7 +180,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -182,6 +190,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -190,8 +199,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Content {\n  id          String         @id @default(cuid())\n  title       String\n  slug        String         @unique // \"the-dark-knight\"\n  synopsis    String? // \"1-2 lines for the hero banner\"\n  heroImage   String? // \"hero-the-dark-knight.jpg\"\n  trailerUrl  String? // \"trailer-the-dark-knight.mp4\"\n  rating      String\n  year        Int\n  duration    String\n  contentType ContentType // \"movie\" or \"series\"\n  isFeatured  Boolean        @default(false) // true or false || show in hero rotation ???\n  genres      ContentGenre[] // \"[\"Action\", \"Drama\", \"Thriller\"]\"\n  createdAt   DateTime       @default(now())\n  updatedAt   DateTime       @updatedAt\n}\n\nmodel ContentGenre {\n  contentId String\n  genreId   String\n  content   Content @relation(fields: [contentId], references: [id])\n  genre     Genre   @relation(fields: [genreId], references: [id])\n\n  @@id([contentId, genreId])\n}\n\nmodel Genre {\n  id    String         @id @default(cuid())\n  name  String         @unique\n  items ContentGenre[]\n}\n\nenum ContentType {\n  MOVIE\n  SERIES\n}\n",
-  "inlineSchemaHash": "2ecaf9d7d16c745ed9a45e8402a2ed0d292ca07496494e911f8c167343277faf",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../app/generated/prisma\"\n  binaryTargets = [\"native\", \"windows\", \"rhel-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Content {\n  id          String         @id @default(cuid())\n  title       String\n  slug        String         @unique // \"the-dark-knight\"\n  synopsis    String? // \"1-2 lines for the hero banner\"\n  heroImage   String? // \"hero-the-dark-knight.jpg\"\n  trailerUrl  String? // \"trailer-the-dark-knight.mp4\"\n  rating      String\n  year        Int\n  duration    String\n  contentType ContentType // \"movie\" or \"series\"\n  isFeatured  Boolean        @default(false) // true or false || show in hero rotation ???\n  genres      ContentGenre[] // \"[\"Action\", \"Drama\", \"Thriller\"]\"\n  createdAt   DateTime       @default(now())\n  updatedAt   DateTime       @updatedAt\n}\n\nmodel ContentGenre {\n  contentId String\n  genreId   String\n  content   Content @relation(fields: [contentId], references: [id])\n  genre     Genre   @relation(fields: [genreId], references: [id])\n\n  @@id([contentId, genreId])\n}\n\nmodel Genre {\n  id    String         @id @default(cuid())\n  name  String         @unique\n  items ContentGenre[]\n}\n\nenum ContentType {\n  MOVIE\n  SERIES\n}\n",
+  "inlineSchemaHash": "90ed26e31bf3a58226b9383c03d3aefa1a802e7c165c3f5441b3b29b4d4013fb",
   "copyEngine": true
 }
 
@@ -232,6 +241,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "app/generated/prisma/query_engine-windows.dll.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-rhel-openssl-3.0.x.so.node");
+path.join(process.cwd(), "app/generated/prisma/libquery_engine-rhel-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "app/generated/prisma/schema.prisma")
