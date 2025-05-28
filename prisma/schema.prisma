@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Content {
+  id          String         @id @default(cuid())
+  title       String
+  slug        String         @unique // "the-dark-knight"
+  synopsis    String? // "1-2 lines for the hero banner"
+  heroImage   String? // "hero-the-dark-knight.jpg"
+  trailerUrl  String? // "trailer-the-dark-knight.mp4"
+  rating      String
+  year        Int
+  duration    String
+  contentType ContentType // "movie" or "series"
+  isFeatured  Boolean        @default(false) // true or false || show in hero rotation ???
+  genres      ContentGenre[] // "["Action", "Drama", "Thriller"]"
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model ContentGenre {
+  contentId String
+  genreId   String
+  content   Content   @relation(fields: [contentId], references: [id])
+  genre     Genre     @relation(fields: [genreId], references: [id])
+
+  @@id([contentId, genreId])
+}
+
+model Genre {
+  id        String   @id @default(cuid())
+  name      String @unique
+  items   ContentGenre[]
+}
+
+enum ContentType {
+  MOVIE
+  SERIES
+}
+

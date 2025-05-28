@@ -1,73 +1,60 @@
-'use client';
+import Image from "next/image";
+import Link from "next/link";
+import prisma from "@/lib/prisma";
 
-import { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+export default async function HeroBanner() {
+  const contents = await prisma.content.findMany({
+    where: {
+      isFeatured: true,
+    },
+  });
 
-export default function HeroBanner() {
-  const [isHovered, setIsHovered] = useState(false);
+  if (!contents || contents.length === 0) {
+    return null;
+  }
 
-  // This would typically come from an API
-  const featuredContent = {
-    title: "Featured Title",
-    description: "A compelling description of the featured content that hooks the viewer and makes them want to watch more.",
-    image: "/placeholder-hero.jpg",
-    videoUrl: "/trailer.mp4",
-    rating: "TV-MA",
-    year: 2024,
-    duration: "2h 15m",
-    genres: ["Action", "Drama", "Thriller"]
-  };
+  // Pick a random featured content to display
+  const content = contents[Math.floor(Math.random() * contents.length)];
 
   return (
     <div className="relative h-[80vh] w-full">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src={featuredContent.image}
-          alt={featuredContent.title}
+          src={content.heroImage || "placeholder-hero.jpg"}
+          alt={content.title}
           fill
           className="object-cover"
           priority
         />
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-      </div> 
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+      </div>
 
       {/* Content */}
       <div className="relative h-full flex items-end">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
           <div className="max-w-2xl">
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-              {featuredContent.title}
+              {content.title}
             </h1>
-            
+
             <div className="flex items-center space-x-4 text-sm text-gray-300 mb-4">
-              <span>{featuredContent.rating}</span>
-              <span>{featuredContent.year}</span>
-              <span>{featuredContent.duration}</span>
-              <div className="flex space-x-2">
-                {featuredContent.genres.map((genre) => (
-                  <span key={genre} className="px-2 py-1 bg-white/20 rounded">
-                    {genre}
-                  </span>
-                ))}
-              </div>
+              <span>{content.rating}</span>
+              <span>{content.year}</span>
+              <span>{content.duration}</span>
+              {/* If adding genres to the model, render them here */}
             </div>
 
-            <p className="text-lg text-gray-300 mb-8">
-              {featuredContent.description}
-            </p>
+            <p className="text-lg text-gray-300 mb-8">{content.synopsis}</p>
 
             <div className="flex space-x-4">
               <Link
-                href={`/watch/${featuredContent.videoUrl}`}
+                href={content.trailerUrl ? `/watch/${content.trailerUrl}` : "#"}
                 className="flex items-center px-8 py-3 bg-white text-black rounded-md font-medium hover:bg-gray-200 transition-colors"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
               >
                 <svg
-                  className={`w-6 h-6 mr-2 transition-transform ${isHovered ? 'scale-110' : ''}`}
+                  className="w-6 h-6 mr-2 transition-transform"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -109,4 +96,4 @@ export default function HeroBanner() {
       </div>
     </div>
   );
-} 
+}
