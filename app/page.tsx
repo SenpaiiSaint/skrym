@@ -7,12 +7,11 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white">
       <Navigation />
-      <main className="pt-16">
+      <main>
         <Suspense fallback={<div>Loading...</div>}>
           <HeroBanner />
         </Suspense>
-        
-        <div className="space-y-8 px-4 md:px-8 py-8">
+        <div className="space-y-8 px-4 md:px-8 py-8 pt-16">
           <Suspense fallback={<div>Loading...</div>}>
             <ContentRow 
               title="Continue Watching"
