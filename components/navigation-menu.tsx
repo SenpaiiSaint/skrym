@@ -59,11 +59,11 @@ export default function Navigation() {
       animate={{ backgroundColor: `rgba(0,0,0,${bgOpacity})` }}
       transition={{ duration: 0.3, ease: 'easeInOut' }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0">
-              <span className="ml-[-90px] text-2xl font-bold text-slate-800">SKRYM</span>
+              <span className="text-2xl font-bold text-slate-800">SKRYM</span>
             </Link>
             <div className="hidden md:block">
               <div className="ml-6 flex items-baseline space-x-4">
